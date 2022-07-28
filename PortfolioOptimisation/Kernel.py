@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import linalg
 def linear_kernel(x1, x2):
     return np.dot(x1, x2)
 
@@ -13,4 +14,4 @@ def get_Ker(x,y,kernel,R_Var):
     elif(kernel=='P'):
         return polynomial_kernel(x,y,R_Var)
     elif(kernel=='R'):
-        return RBF_ker(x,y,R_var)
+        return RBF_ker(x,y,R_Var)

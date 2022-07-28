@@ -44,21 +44,22 @@ def phi_x(x_test_i,x,t,alpha,kernel,K_Var): # x,y is the training data set
         s=s+alpha[i]*t[i]*get_Ker(x[i],x_test_i,kernel,K_Var)
     return s
 
-def get_w0(alpha, t, x, C,kernel,K_Var):
+def get_b(alpha, t, x, C,kernel,K_Var):
     C_numeric = C - ZERO
     # Indices of support vectors with alpha<C
     ind_sv = np.where((alpha > ZERO) & (alpha < C_numeric))[0]
-    w0 = 0.0
+    b = 0.0
     for s in ind_sv:
-        w0 = w0 + (-t[s] + phi_x(x[s],x,t,alpha,kernel,K_Var))
+        b = b + (-t[s] + phi_x(x[s],x,t,alpha,kernel,K_Var))
     # Take the average
-    w0 = w0 / len(ind_sv)
-    return w0
+    b = b / len(ind_sv)
+    return b
 
 def classify_points(x_test,x,t,alpha,w0,kernel,K_Var):
     # get y(x_test)
     predicted_labels=[]
-    for i in range(len(x_test)):
+    for x in x_test:
+        for i in self.SVind:
         predicted_labels.append(phi_x(x_test[i],x,t,alpha,kernel,K_Var)-w0)
     predicted_labels = np.array(predicted_labels)
     predicted_labels = np.sign(predicted_labels)
@@ -71,7 +72,7 @@ def misclassification_rate(labels, predictions):
     total = len(labels)
     errors = sum(labels != predictions)
     return errors / total * 100
-def train(x,t,p):
+def SplitTrainTest(x,t,p):
     x1=x[:int((len(x)/100)*p)]
     t=t[:int((len(x)/100)*p)]
     return x1,t

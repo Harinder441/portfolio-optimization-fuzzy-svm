@@ -124,10 +124,7 @@ while(C<1):
 # c=[0.01,0.1,1,10,20,50,100,250,500,1000,2000,5000,10000]
 C=1000
 K_Var=0.1
-# for K_Var in K:
-#     for C in c:
-#         print("C,gamma",C,K_Var)
-#         # display_fuzzySVM_result(dat, labels, C, p, F_sigma, kernel, K_Var, M='S')
+display_fuzzySVM_result(dat, labels, C, p, F_sigma, kernel, K_Var, M='S')
 
 # s=np.array([1 for i in range(len(dat[:4]))])
 # s=get_siMember(dat[:4],F_sigma)
@@ -138,15 +135,15 @@ K_Var=0.1
 # P=classify_points(dat[4:],dat[:4],labels[:4],alpha,b,kernel,None)
 # print(P)
 
-if __name__=="__main__":
-    x_test,t_test=test(dat,labels,p)
-    x_train,t_train=train(dat,labels,p)
-    s=np.array([1 for i in range(len(x_train))])
-    # from line_profiler import LineProfiler
-    # lp = LineProfiler()
-    #
-    # lp_wrapper = lp(optimize_alpha)
-    # lp_wrapper
-    # lp.print_stats()
-    a=optimize_alpha(x_train ,t_train,kernel, K_Var, C,s=None)
-    print(a)
+# if __name__=="__main__":
+#     x_test,t_test=test(dat,labels,p)
+#     x_train,t_train=train(dat,labels,p)
+#     s=np.array([1 for i in range(len(x_train))])
+#     # from line_profiler import LineProfiler
+#     # lp = LineProfiler()
+#     #
+#     # lp_wrapper = lp(optimize_alpha)
+#     # lp_wrapper
+#     # lp.print_stats()
+#     a=optimize_alpha(x_train ,t_train,kernel, K_Var, C,s=None)
+#     print(a)
