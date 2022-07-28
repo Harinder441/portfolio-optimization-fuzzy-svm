@@ -123,19 +123,20 @@ while(C<1):
     C+=0.1
 '''
 
-#Do the Work
+# #Do the Work
 C=2
-F=0.1
-while(F<1):
-    print("F=",F)
-    FS=SVM(dat,labels,C=C,Split_p=60,Kernel='R',K_Var=F,Fsigma=0.5)
-    alpha=FS.optimize_alpha()
-    b=FS.get_b(alpha)
-    PD=FS.classify_points(alpha)
-    Er=FS.misclassification_rate(alpha)
-    SV=FS.GetSupportVector(alpha)
-    print(alpha,PD,Er,SV,len(FS.X_train))
-    F+=0.1
+F=0.5
+
+FS=SVM(dat,labels,C=C,Split_p=66,Kernel='R',K_Var=F,Fsigma=0.5)
+alpha=FS.optimize_alpha()
+SV=FS.GetSupportVector()
+PD=FS.classify_points()
+
+Er=FS.misclassification_rate()
+Ker=FS.Kfold(3)
+print("Prediction=",PD,"Error=",Er,"SV=",SV,"out of",len(FS.X_train),"KEr=",Ker)
+F+=0.1
+
 
 
 # s=np.array([1 for i in range(len(dat[:4]))])

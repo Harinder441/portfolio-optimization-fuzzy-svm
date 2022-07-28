@@ -2,18 +2,23 @@ import numpy as np
 import cvxopt
 from Kernel import *
 ZERO = 1e-5
-
+from sklearn.model_selection import KFold
 class SVM:
     def __init__(self,X, y, Kernel='L', K_Var=None, C=1.0,Fsigma=None,Split_p=80):
         self.X_train,self.y_train,self.X_test,self.y_test=self.SplitTrainTest(X,y,Split_p)
-
+        self.X,self.y=X,y
         self.Kernel=Kernel
         self.K_Var=K_Var
         self.C=C
         self.Fsigma=Fsigma
         self.SVind=None
-    def optimize_alpha(self):
-        X,y,Kernel,K_Var,C,Fsigma=self.X_train,self.y_train,self.Kernel,self.K_Var,self.C,self.Fsigma
+        self.b_=None
+    def optimize_alpha(self,X=None,y=None):
+        if type(X).__name__ == 'NoneType':
+            X, y=self.X_train,self.y_train
+        else:
+            self.X_train, self.y_train=X,y
+        Kernel,K_Var,C,Fsigma=self.Kernel,self.K_Var,self.C,self.Fsigma
         n_samples, n_features = X.shape
 
         # Gram matrix
@@ -27,7 +32,6 @@ class SVM:
         # print(W)
         q = cvxopt.matrix(np.ones(n_samples) * -1)
         A = cvxopt.matrix(y, (1, n_samples))
-        print(A)
         b = cvxopt.matrix(0.0)
 
         tmp1 = np.diag(np.ones(n_samples) * -1)
@@ -39,23 +43,25 @@ class SVM:
         else:
             tmp2 = self.get_siMember() * C
         h = cvxopt.matrix(np.hstack((tmp1, tmp2)))
-
+        cvxopt.solvers.options['show_progress']=False
         # solve QP problem
         solution = cvxopt.solvers.qp(P, q, G, h, A, b)
 
         # Lagrange multipliers
         alpha = np.ravel(solution['x'])
-        return alpha
-    def GetSupportVector(self,alpha):
+        self.alpha=alpha
+        return self.alpha
+    def GetSupportVector(self):
+        alpha=self.alpha
         sv = alpha > 1e-5
         self.SVind = np.arange(len(alpha))[sv]
         return len(self.SVind)
 
     def phi_x(self,x_test_i,x,t,alpha):
         pass
-    def get_b(self,alpha):
-        if self.SVind==None:
-            self.GetSupportVector(alpha)
+    def get_b(self):
+        alpha=self.alpha
+        self.GetSupportVector()
 
         X,y=self.X_train,self.y_train
         C_numeric = self.C - ZERO
@@ -71,22 +77,26 @@ class SVM:
         # Take the average
         self.b_ = sum(b) / len(Cbound_sv_ind)
         return self.b_
-    def classify_points(self,alpha):
+    def classify_points(self):
+        if self.b_==None:
+            self.get_b()
         X,y=self.X_train,self.y_train
         predicted_labels = []
         for x in self.X_test:
             sum=0
             for i in self.SVind:
-                sum+=alpha[i]*y[i]*get_Ker(X[i], x,self.Kernel,self.K_Var)
-            predicted_labels.append(sum -self.b_)
+                sum+=self.alpha[i]*y[i]*get_Ker(X[i], x,self.Kernel,self.K_Var)
+            predicted_labels.append(sum - self.b_)
         predicted_labels = np.array(predicted_labels)
         self.predicted_labels = np.sign(predicted_labels)
         # Assign a label arbitrarily a +1 if it is zero
         self.predicted_labels[predicted_labels == ZERO] = 1
         return self.predicted_labels
 
-    def misclassification_rate(self,alpha):
-        self.classify_points(alpha)
+    def misclassification_rate(self,X=None,y=None):
+        if type(X).__name__ != 'NoneType':
+            self.X_test,self.y_test=X,y
+        self.classify_points()
         total = len(self.y_test)
         errors = np.sum(self.y_test !=self.predicted_labels)
         return errors / total * 100
@@ -106,7 +116,13 @@ class SVM:
             s.append(si)
         s = np.array(s)
         return s
-
+    def Kfold(self,n_splits=3):
+        kf = KFold(n_splits=n_splits)
+        A=0
+        for tr_i, ts_i in kf.split(self.X):
+            self.optimize_alpha(self.X[tr_i],self.y[tr_i])
+            A+=self.misclassification_rate(self.X[ts_i],self.y[ts_i])
+        return A/n_splits
 if __name__=="__main__":
     X=np.array([[1,8],[4,5],[4,4],[1,1],[8,3]])
     y=np.array([1.0,1.0,1.0,1.0,-1.0])
