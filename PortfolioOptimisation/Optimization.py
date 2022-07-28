@@ -113,8 +113,10 @@ if __name__=="__main__":
     C=1
     kernel="L"
     sigma=None
-    A=SVM(X,y,Split_p=100,Fsigma=0.5)
+    A=SVM(X,y,Split_p=100)
     a=A.optimize_alpha()
     b=A.get_b(a)
     # E=A.misclassification_rate(a)
     print(a,b)
+#https://mbhaskar1.github.io/machine%20learning/2019/07/04/svm-using-cvxopt.html
+#https://www.csie.ntu.edu.tw/~cjlin/libsvm/#download
