@@ -123,6 +123,21 @@ class SVM:
             self.optimize_alpha(self.X[tr_i],self.y[tr_i])
             A+=self.misclassification_rate(self.X[ts_i],self.y[ts_i])
         return A/n_splits
+    def classify_NextDay(self,x):
+        if self.b_==None:
+            self.get_b()
+        X,y=self.X,self.y
+        predicted_labels = []
+
+        sum=0
+        for i in self.SVind:
+            sum+=self.alpha[i]*y[i]*get_Ker(X[i], x,self.Kernel,self.K_Var)
+        predicted_labels.append(sum - self.b_)
+        predicted_labels = np.array(predicted_labels)
+        self.predicted_labels = np.sign(predicted_labels)
+        # Assign a label arbitrarily a +1 if it is zero
+        self.predicted_labels[predicted_labels == ZERO] = 1
+        return self.predicted_labels
 if __name__=="__main__":
     X=np.array([[1,8],[4,5],[4,4],[1,1],[8,3]])
     y=np.array([1.0,1.0,1.0,1.0,-1.0])
