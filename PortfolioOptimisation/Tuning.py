@@ -5,8 +5,7 @@ import pandas as pd
 from sklearn.decomposition import PCA
 # Taking data of aaple and CAT
 from PortfolioOptimisation.Features import *
-def Tuningandsecting(df):
-    date= df.index.to_list()
+def Tuningandsecting(df,Target=0.005):
     PD,LP,HP,V= getPriceLowHighVolume(df)
     yd= ROC(PD,1) # rate return
     x1= ROC(PD,1) # rate return
@@ -20,13 +19,13 @@ def Tuningandsecting(df):
     x9=AD(PD,HP,LP,V,14)
     x10=MFI(PD,LP,HP,V,14)
     # print(x7)
-    print("S.No.            y                Rate                       SMA               EMA                 ROC                MACD                   RSI               Will_R                  SO                AD                  MFI    ")
-    for i in range(len(x1)):
-        print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"   ",x8[i],"   ",x9[i],"   ",x10[i])
-    X=[]
+    # print("S.No.            y                Rate                       SMA               EMA                 ROC                MACD                   RSI               Will_R                  SO                AD                  MFI    ")
+    # for i in range(len(x1)):
+    #     print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"   ",x8[i],"   ",x9[i],"   ",x10[i])
+    # X=[]
 
     #AFTER SHIFTING
-    print("AFTER SHIFTING")
+    # print("AFTER SHIFTING")
     N=26
     x1=x1[N-1:len(x1)]
     x2=x2[N-1:len(x2)]
@@ -38,11 +37,10 @@ def Tuningandsecting(df):
     x8=x8[N-1:len(x8)]
     x9=x9[N-1:len(x9)]
     x10=x10[N-1:len(x10)]
-    date=date[N:]
     yd=yd[N:]
-    print("SN,            y                Rate                       SMA               EMA                 ROC                 MACD                   RSI               Will_R                  SO                AD                  MFI      ")
-    for i in range(len(x1)-1):
-        print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"  ",x8[i],"  ",x9[i],"  ",x10)
+    # print("SN,            y                Rate                       SMA               EMA                 ROC                 MACD                   RSI               Will_R                  SO                AD                  MFI      ")
+    # for i in range(len(x1)-1):
+    #     print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"  ",x8[i],"  ",x9[i],"  ",x10)
     x1=Normalise(x1) # rate return
     x2=Normalise(x2)
     x3=Normalise(x3)
@@ -53,11 +51,11 @@ def Tuningandsecting(df):
     x8=Normalise(x8)
     x9=Normalise(x9)
     x10=Normalise(x10)
-    print("After Normalise")
-    print("SN            y                Rate                       SMA               EMA                 ROC                 MACD                   RSI               Will_R                  SO                AD                  MFI      ")
-
-    for i in range(len(x1)-1):
-        print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"  ",x8[i],"  ",x9[i],"  ",x10[i],)
+    # print("After Normalise")
+    # print("SN            y                Rate                       SMA               EMA                 ROC                 MACD                   RSI               Will_R                  SO                AD                  MFI      ")
+    #
+    # for i in range(len(x1)-1):
+    #     print(i," ",yd[i]," ",x1[i],"  ",x2[i],"  ",x3[i],"  ",x4[i]," ",x5[i],"   ",x6[i],"  ",x7[i],"  ",x8[i],"  ",x9[i],"  ",x10[i],)
 
 
     #making Feature Spce
@@ -66,7 +64,7 @@ def Tuningandsecting(df):
         X.append([x1[i],x2[i],x3[i],x4[i],x5[i],x6[i],x7[i],x8[i],x9[i],x10[i]])
     #changing y to +1,-1
     DF=pd.DataFrame(X,columns=["Rt","SMA" ,"EMA", "ROC", "MACD","RSI", "Will_R", "SO","AD" ,"MFI"])
-    print(DF)
+    # print(DF)
     scaled_data = DF
     pca = PCA(0.95)  # create a PCA object
     pca.fit(scaled_data)  # do the math
@@ -77,12 +75,10 @@ def Tuningandsecting(df):
     print("todays data after PCA",today)
     y=[]
     for i in range(len(yd)):
-        if yd[i] >= 0.005:
+        if yd[i] >= Target:
             y.append(1.0)
         else:
             y.append(-1.0)
-    print("X=",X)
-    print("y=",y)
     dat = np.array(X)
     labels = np.array(y)
     # pca = PCA(n_components=5)

@@ -69,7 +69,7 @@ def Will_R(PD,HP,LP,N): #PD-- closing price
         HHP[i]=max(HP[i+1-N:i+1])
         LLP[i]=min(LP[i+1-N:i+1])
         Will[i]=((PD[i]-HHP[i])/(HHP[i]-LLP[i]))*100
-    print(HHP,"\n",LLP)
+    # print(HHP,"\n",LLP)
     return Will
 def SO(PD,HP,LP,N,N1):
     HHP=[0 for i in range(len(PD))]
@@ -130,7 +130,7 @@ def selectFeature(W):
 def getFeatureSpace(PD,High=None,Low=None,Volume=None,Features=["R1","SMA","EMA","ROC","MACD","RSI",]): #"WILL","SON","AD"
     pass
 def getPriceLowHighVolume(df):
-    return list(df['Close']),list(df['High']),list(df['Low']),list(df['Volume'])
+    return list(df['Trade Close']),list(df['Trade High']),list(df['Trade Low']),list(df['Trade Volume'])
 def Normalise(D):
     X=D.copy()
     X_max=max(X)

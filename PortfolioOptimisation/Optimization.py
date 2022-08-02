@@ -73,7 +73,6 @@ class SVM:
             for i in self.SVind:
                 Sum=Sum+alpha[i]*y[i]*get_Ker(X[i], X[j],self.Kernel,self.K_Var)  #check something can done for getker
             b.append(-y[j] + Sum)
-        print(b)
         # Take the average
         self.b_ = sum(b) / len(Cbound_sv_ind)
         return self.b_
