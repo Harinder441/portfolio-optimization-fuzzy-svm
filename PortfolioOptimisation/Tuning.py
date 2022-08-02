@@ -92,7 +92,7 @@ def Tuningandsecting(df,Target=0.005):
     for i in C:
         for j in K:
             for fs in FSigma:
-                FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=None)
+                FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=fs)
                 FS.optimize_alpha()
                 Ker=FS.Kfold(3)
                 if Ker<E:
