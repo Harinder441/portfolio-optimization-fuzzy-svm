@@ -8,19 +8,20 @@ from Features import *
 def Tuningandselecting(df,Target=0.005):
     PD,LP,HP,V= getPriceLowHighVolume(df)
     yd= ROC(PD,1) # rate return
-    x1= ROC(PD,1) # rate return
-    x2=SMA(PD,5)
-    x3=EMA(PD,5)
-    x4=ROC(PD,3)
-    x5=MACD(PD)
-    x6=RSI(PD,14)
-    x7=Will_R(PD,HP,LP,14)
-    x8=SO(PD,HP,LP,14,3)
-    x9=AD(PD,HP,LP,V,14)
     try:
+        x1= ROC(PD,1) # rate return
+        x2=SMA(PD,5)
+        x3=EMA(PD,5)
+        x4=ROC(PD,3)
+        x5=MACD(PD)
+        x6=RSI(PD,14)
+        x7=Will_R(PD,HP,LP,14)
+        x8=SO(PD,HP,LP,14,3)
+        x9=AD(PD,HP,LP,V,14)
         x10=MFI(PD,LP,HP,V,14)
-    except ZeroDivisionError:
+    except:
         print("Zero division Error occured")
+        return [0]
     # print(x7)
     # print("S.No.            y                Rate                       SMA               EMA                 ROC                MACD                   RSI               Will_R                  SO                AD                  MFI    ")
     # for i in range(len(x1)):
