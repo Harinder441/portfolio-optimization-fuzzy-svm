@@ -2,7 +2,8 @@ import pandas as pd
 from Tuning import *
 from pandas import read_excel
 df=read_excel(r"C:\Users\Ruchika\Downloads\Nifty 50 (3).xlsx")
-sdf=df.iloc[:300,3:]
+sdf=df.iloc[:523,3:]
+
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
 select=[]
@@ -12,3 +13,4 @@ for i in range(0,200,4):
     select.append(Tuningandselecting(df,Target=0.002)[0])
     print(select[int(i/4)])
 print(select)
+
