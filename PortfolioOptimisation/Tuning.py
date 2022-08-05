@@ -96,8 +96,8 @@ def Tuningandselecting(df,Target=0.005):
     for i in C:
         for j in K:
             for fs in FSigma:
-                FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=None)
-                #FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=fs)
+                #FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=None)
+                FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=fs)
                 FS.optimize_alpha()
                 Ker=FS.Kfold(3)
                 if Ker<E:
@@ -106,14 +106,15 @@ def Tuningandselecting(df,Target=0.005):
 
     print(Q,E)
 
-    #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=Q[0][2],Split_p=100)
-    check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
+    check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=Q[0][2],Split_p=100)
+    #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
     check.optimize_alpha()
     check.get_b()
     check.GetSupportVector()
     check.classify_NextDay(today)
 
     return check.classify_NextDay(today)
+
 if __name__=="__main__":
     # df = yf.download(['AAPL'], start="2022-01-01", end="2022-06-01")
     # print(Tuningandselecting(df)[0])
