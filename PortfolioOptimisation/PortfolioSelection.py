@@ -22,6 +22,7 @@ print(select)
 df2 = pd.DataFrame(select)
 print(df2)
 print(selectdf)
+df2.to_excel("shortlisted.xlsx", sheet_name='shortlist')
 # name=[]
 # name_modified=[]
 # for i in range(len(select)):

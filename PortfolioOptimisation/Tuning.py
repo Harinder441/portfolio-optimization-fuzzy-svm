@@ -115,6 +115,7 @@ def Tuningandselecting(df,Target=0.005):
 
     return check.classify_NextDay(today)
 
+
 if __name__=="__main__":
     # df = yf.download(['AAPL'], start="2022-01-01", end="2022-06-01")
     # print(Tuningandselecting(df)[0])
