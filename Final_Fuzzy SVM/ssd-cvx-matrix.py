@@ -91,6 +91,7 @@ print("b2",b2)
 #     if(i%T==0):
 #         divT+=1
 #     b2[i]=-b[divT]
+# print("b2", b2)
 #3
 b3=np.zeros((T,1))
 for i in range(T):
