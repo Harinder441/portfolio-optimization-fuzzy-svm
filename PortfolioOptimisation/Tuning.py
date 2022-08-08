@@ -76,7 +76,7 @@ def Tuningandselecting(df,Target=0.005):
     X=np.array(pca_data)
     today = X[len(X) - 1]
     X=X[:len(X)-1]
-    print("todays data after PCA",today)
+    # print("todays data after PCA",today)
     y=[]
     for i in range(len(yd)):
         if yd[i] >= Target:
@@ -104,7 +104,7 @@ def Tuningandselecting(df,Target=0.005):
                     E=Ker
                     Q[0]=[i,j,fs]
 
-    print(Q,E)
+    # print(Q,E)
 
     check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=Q[0][2],Split_p=100)
     #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
