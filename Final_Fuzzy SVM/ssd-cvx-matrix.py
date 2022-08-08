@@ -5,8 +5,8 @@ from cvxopt.modeling import variable,op
 import cvxopt.solvers
 # df=pd.read_excel(r"C:\Users\lenovo\Dropbox\PC\Documents\firstproject\nifty50_daily_2015-present.xlsx").iloc[1305:,1:17]
 # df1=pd.read_excel(r"C:\Users\lenovo\Dropbox\PC\Documents\firstproject\Nifty_index2015-present.xlsx").iloc[1305:,1:17]
-df=pd.read_excel(r"C:\Users\Ruchika\Downloads\1.xlsx").iloc[1304:1310,3:]
-df1=pd.read_excel(r"C:\Users\Ruchika\Downloads\1.xlsx").iloc[1304:1310,1:2]
+df=pd.read_excel(r"C:\Users\Ruchika\Desktop\Simrandeep\dowjones30daily.xlsx").iloc[852:952,2:]
+df1=pd.read_excel(r"C:\Users\Ruchika\Desktop\Simrandeep\dowjones30daily.xlsx").iloc[852:952,1:2]
 print(df)
 print(df1)
 b=np.array(df1.iloc[:,0:1])
@@ -84,7 +84,7 @@ b1=[0.0]
 b2=cvxopt.matrix(b)
 b21=cvxopt.matrix(b)
 for i in range(T-1):
-    b2=np.vstack((b2,b21))
+    b2=-np.vstack((b2,b21))
 print("b2",b2)
 # divT=-1
 # for i in range(T**2):
@@ -96,6 +96,7 @@ print("b2",b2)
 b3=np.zeros((T,1))
 for i in range(T):
     b3[i]=v_k(b,i)
+print("b3",b3)
 #4
 b4=np.zeros((T**2,1))
 #5
