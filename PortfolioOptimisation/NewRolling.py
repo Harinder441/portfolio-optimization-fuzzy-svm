@@ -18,12 +18,12 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
         return 0
 
 
-
 #df=read_excel(r"C:\Users\Ruchika\PycharmProjects\PortfolioOptimisation\PortfolioOptimisation\Nifty 50 (3).xlsx")
-df=read_excel(r"C:\Users\Ruchika\Downloads\NIFTY50 2015-Present ALL.xlsx")
+df=read_excel(r"C:\Users\Ruchika\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='SVM_FilteredData2015-2022')
 #sdf=df.iloc[:523,3:]
 sdf=df.iloc[1:1861,3:]
-
+dfReturns=read_excel(r"C:\Users\Ruchika\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='SVM_ReturnsAllFeatures')   #give path of return file here
+sdfReturns=dfReturns.iloc[1:1861,3:]
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
@@ -33,31 +33,27 @@ W=28 # no. of rolling
 #D=50
 D=180 #no. of training days on which rolling performed
 #for i in range(0,20,4):
-Add=0 # I think for SSD
-for j in range(W):
+Add=60 # I think for SSD
+
+for j in range(0,10):
     selectdf = pd.DataFrame()
     selectrow = []
-    for i in range(0,20, 4):
+    for i in range(0,192,4):
         df = np.array(sdf.iloc[:, i + 1:i + 5])
         df = pd.DataFrame(df, columns=ind)
-        dfw = df[j+Add:D + j+Add]
+        dfw = df[j+j*Add:D + j+j*Add]
         r = Tuningandselecting(dfw, Target=0.002)[0]
         selectrow.append(r)
+        print(r)
         if r== 1:
-            selectdf[str(int(i / 4))] = sdf.iloc[j+Add:D + j+Add+60, i + 3:i + 4]
+            selectdf[str(int(i / 4))] = sdfReturns.iloc[j+j*Add:D + j+j*Add+60, i + 3:i + 4]
     # print(selectrow,selectdf)
     select.append(selectrow)
     selecteddataframes.append(selectdf)
-    Add+=60
-
-
-
-
-
 print(select)
 # df2 = pd.DataFrame(select)
 # print(df2)
-writein=pd.ExcelWriter("AfterRolling4.xlsx",engine='xlsxwriter')
+writein=pd.ExcelWriter("AfterRolling5.xlsx",engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
