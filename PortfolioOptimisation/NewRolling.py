@@ -37,14 +37,14 @@ Add=0 # I think for SSD
 for j in range(W):
     selectdf = pd.DataFrame()
     selectrow = []
-    for i in range(0,192, 4):
+    for i in range(0,20, 4):
         df = np.array(sdf.iloc[:, i + 1:i + 5])
         df = pd.DataFrame(df, columns=ind)
         dfw = df[j+Add:D + j+Add]
         r = Tuningandselecting(dfw, Target=0.002)[0]
         selectrow.append(r)
         if r== 1:
-            selectdf[str(int(i / 4))] = sdf.iloc[j+Add:D + j+Add, i + 3:i + 4]
+            selectdf[str(int(i / 4))] = sdf.iloc[j+Add:D + j+Add+60, i + 3:i + 4]
     # print(selectrow,selectdf)
     select.append(selectrow)
     selecteddataframes.append(selectdf)
