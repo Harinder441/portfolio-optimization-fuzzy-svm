@@ -35,7 +35,7 @@ D=180 #no. of training days on which rolling performed
 #for i in range(0,20,4):
 Add=60 # I think for SSD
 
-for j in range(0,10):
+for j in range(10,27):
     selectdf = pd.DataFrame()
     selectrow = []
     for i in range(0,192,4):
@@ -53,7 +53,7 @@ for j in range(0,10):
 print(select)
 # df2 = pd.DataFrame(select)
 # print(df2)
-writein=pd.ExcelWriter("AfterRolling5.xlsx",engine='xlsxwriter')
+writein=pd.ExcelWriter("RollingResults10to27.xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
