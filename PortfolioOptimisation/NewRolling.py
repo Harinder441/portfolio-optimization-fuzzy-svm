@@ -30,13 +30,13 @@ ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
 select=[]
 #W=5
-W=28 # no. of rolling
+W=27 # no. of rolling
 #D=50
 D=180 #no. of training days on which rolling performed
 #for i in range(0,20,4):
 Add=60 # I think for SSD
 
-for j in range(1,2):
+for j in range(22,27):
     selectdf = pd.DataFrame()
     selectrow = []
     for i in range(0,472,4):
@@ -54,7 +54,7 @@ for j in range(1,2):
 print(select)
 # df2 = pd.DataFrame(select)
 # print(df2)
-writein=pd.ExcelWriter("FTSE100_FSVMRolling1.xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("FTSE100_FSVMRolling22to26.xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
