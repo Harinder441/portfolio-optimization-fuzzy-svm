@@ -88,30 +88,32 @@ def Tuningandselecting(df,Target=0.005):
     # pca = PCA(n_components=5)
 
     # #Do the Work
-    C=[1,10,100,1000]
-    K=[0.2,0.4,0.6,0.8,0.9]
-    FSigma=[0.1,0.2,0.4,0.6,0.8,0.9]
-    Q=[0]
-    E=100
-    for i in C:
-        for j in K:
-            for fs in FSigma:
-                FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=None)
-                #FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=fs)
-                FS.optimize_alpha()
-                try:
-                    Ker=FS.Kfold(3)
-                except:
-                    print("Zero division Error occured in K fold")
-                    return [0]
-                if Ker<E:
-                    E=Ker
-                    Q[0]=[i,j,fs]
+    # C=[1,10,100,1000]
+    # K=[0.2,0.4,0.6,0.8,0.9]
+    # FSigma=[0.1,0.2,0.4,0.6,0.8,0.9]
+    # Q=[0]
+    # E=100
+    # for i in C:
+    #     for j in K:
+    #         for fs in FSigma:
+    #             FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=None)
+    #             #FS=SVM(dat,labels,C=i,Kernel='R',K_Var=j,Fsigma=fs)
+    #             FS.optimize_alpha()
+    #             try:
+    #                 Ker=FS.Kfold(3)
+    #             except:
+    #                 print("Zero division Error occured in K fold")
+    #                 return [0]
+    #             if Ker<E:
+    #                 E=Ker
+    #                 Q[0]=[i,j,fs]
+    #
+    # # print(Q,E)
 
-    # print(Q,E)
-
+    #check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=0.1,Split_p=100)
+    check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=None,Split_p=100)
     #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=Q[0][2],Split_p=100)
-    check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
+    #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
     check.optimize_alpha()
     check.get_b()
     check.GetSupportVector()
