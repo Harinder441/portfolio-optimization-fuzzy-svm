@@ -54,7 +54,7 @@ for j in range(0,27):
 print(select)
 # df2 = pd.DataFrame(select)
 # print(df2)
-writein=pd.ExcelWriter("NIKKEI400_FSVMRolling0to26.xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("NIKKEI400_SVMRolling0to26.xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()

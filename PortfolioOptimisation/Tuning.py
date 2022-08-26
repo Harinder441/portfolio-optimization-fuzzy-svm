@@ -110,8 +110,8 @@ def Tuningandselecting(df,Target=0.005):
     #
     # # print(Q,E)
 
-    check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=0.1,Split_p=100)
-    #check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=None,Split_p=100)
+    #check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=0.1,Split_p=100)
+    check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=None,Split_p=100)
     #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=Q[0][2],Split_p=100)
     #check=SVM(dat,labels,C=Q[0][0],Kernel='R',K_Var=Q[0][1],Fsigma=None,Split_p=100)
     check.optimize_alpha()
