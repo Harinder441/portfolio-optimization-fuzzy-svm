@@ -36,7 +36,7 @@ D=180 #no. of training days on which rolling performed
 #for i in range(0,20,4):
 Add=60 # I think for SSD
 
-for j in range(0,27):
+for j in range(0,3):
     selectdf = pd.DataFrame()
     selectrow = []
     for i in range(0,188,4):
@@ -54,7 +54,7 @@ for j in range(0,27):
 print(select)
 # df2 = pd.DataFrame(select)
 # print(df2)
-writein=pd.ExcelWriter("NFTY50_SVMRolling0to26(1).xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("NFTY50_FSVMRolling0to2(1).xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
