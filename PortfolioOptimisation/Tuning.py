@@ -88,7 +88,7 @@ def Tuningandselecting(df,Target=0.005):
     # pca = PCA(n_components=5)
 
     # #Do the Work
-    C=[1,5,10,15,20]
+    C=[1,5,10,15,20,50,100,500,1000]
     K=[0.2,0.4,0.6,0.8,0.9]
     FSigma=[0.1,0.2,0.4,0.6,0.8]
     Q=[0]
