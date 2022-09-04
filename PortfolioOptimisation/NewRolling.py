@@ -18,12 +18,11 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
     else:
         return 0
 
-
 #df=read_excel(r"C:\Users\Ruchika\PycharmProjects\PortfolioOptimisation\PortfolioOptimisation\Nifty 50 (3).xlsx")
-df=read_excel(r"C:\Users\Simran\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='FilteredAllWithoutIndex')
+df=read_excel(r"C:\Users\abha\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='FilteredAllWithoutIndex')
 #sdf=df.iloc[:523,3:]
 sdf=df.iloc[1:1861,3:]
-dfReturns=read_excel(r"C:\Users\Simran\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='ReturnsWithoutIndex')   #give path of return file here
+dfReturns=read_excel(r"C:\Users\abha\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='ReturnsWithoutIndex')   #give path of return file here
 sdfReturns=dfReturns.iloc[1:1861,3:]
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
@@ -36,25 +35,25 @@ D=180 #no. of training days on which rolling performed
 #for i in range(0,20,4):
 Add=60 # I think for SSD
 
-for j in range(20,27):
-    selectdf = pd.DataFrame()
-    selectrow = []
-    for i in range(0,188,4):
-        df = np.array(sdf.iloc[:, i + 1:i + 5])
-        df = pd.DataFrame(df, columns=ind)
-        dfw = df[j*Add:D + j*Add]
-        r = Tuningandselecting(dfw, Target=0.002)[0]
-        selectrow.append(r)
-        print(r)
-        if r== 1:
-            selectdf[str(int(i / 4))] = sdfReturns.iloc[j*Add:D+j*Add+60, i + 3:i + 4]
-    # print(selectrow,selectdf)
-    select.append(selectrow)
-    selecteddataframes.append(selectdf)
+for j in range(0,3):
+     selectdf = pd.DataFrame()
+     selectrow = []
+     for i in range(0,178,4):
+         df = np.array(sdf.iloc[:, i + 1:i + 5])
+         df = pd.DataFrame(df, columns=ind)
+         dfw = df[j*Add:D +j*Add]
+         r = Tuningandselecting(dfw, Target=0.002)[0]
+         selectrow.append(r)
+         print(r)
+         if r== 1:
+             selectdf[str(int(i / 4))] = sdfReturns.iloc[j*Add:D + j*Add+60, i + 3:i + 4]
+#      print(selectrow,selectdf)
+     select.append(selectrow)
+     selecteddataframes.append(selectdf)
 print(select)
-# df2 = pd.DataFrame(select)
-# print(df2)
-writein=pd.ExcelWriter("NFTY50_FSVMRolling20to26(F).xlsx", engine='xlsxwriter')
+# # df2 = pd.DataFrame(select)
+# # print(df2)
+writein=pd.ExcelWriter("NFTY50_FSVMRolling0to2(F).xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
