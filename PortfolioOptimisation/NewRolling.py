@@ -38,7 +38,7 @@ Add=60 # I think for SSD
 for j in range(0,3):
      selectdf = pd.DataFrame()
      selectrow = []
-     for i in range(0,188,4):
+     for i in range(0,178,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
          df = pd.DataFrame(df, columns=ind)
          dfw = df[j*Add:D +j*Add]
