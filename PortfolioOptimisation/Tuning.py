@@ -88,7 +88,7 @@ def Tuningandselecting(df,Target=0.005):
     # pca = PCA(n_components=5)
 
     # #Do the Work
-    C=[1,5,10,20,50,100,500,1000]
+    C=[1,5,10,15,20,50,100,500,1000]
     K=[0.2,0.4,0.6,0.8,0.9]
     FSigma=[0.1,0.2,0.4,0.6,0.8]
     Q=[0]
@@ -108,7 +108,7 @@ def Tuningandselecting(df,Target=0.005):
                     E=Ker
                     Q[0]=[i,j,fs]
 
-    #print(Q,E)
+   # print(Q,E)
 
     #check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=0.1,Split_p=100)
     #check=SVM(dat,labels,C=1,Kernel='R',K_Var=0.2,Fsigma=None,Split_p=100)
