@@ -88,7 +88,7 @@ def Tuningandselecting(df,Target=0.005):
     # pca = PCA(n_components=5)
 
     # #Do the Work
-    C=[1,5,10,20,50,100,500,1000]
+    C=[1,5,10,20,100,500,1000]
     K=[0.2,0.4,0.6,0.8,0.9]
     FSigma=[0.1,0.2,0.4,0.6,0.8]
     Q=[0]
@@ -122,8 +122,8 @@ def Tuningandselecting(df,Target=0.005):
     return check.classify_NextDay(today)
 
 
-# if __name__=="__main__":
-#     # df = yf.download(['AAPL'], start="2022-01-01", end="2022-06-01")
-#     # print(Tuningandselecting(df)[0])
-#     pass
+if __name__=="__main__":
+    # df = yf.download(['AAPL'], start="2022-01-01", end="2022-06-01")
+    # print(Tuningandselecting(df)[0])
+    pass
 
