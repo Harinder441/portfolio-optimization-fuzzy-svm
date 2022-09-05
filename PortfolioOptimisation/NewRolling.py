@@ -20,26 +20,26 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
 
 
 #df=read_excel(r"C:\Users\Ruchika\PycharmProjects\PortfolioOptimisation\PortfolioOptimisation\Nifty 50 (3).xlsx")
-df=read_excel(r"C:\Users\admin\Downloads\FTSE100ALL.xlsx",sheet_name='FilteredWithoutIndexAll')
+df=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='FilteredDataWithoutIndex')
 #sdf=df.iloc[:523,3:]
-sdf=df.iloc[1:1861,3:]
-dfReturns=read_excel(r"C:\Users\admin\Downloads\FTSE100ALL.xlsx",sheet_name='ReturnsWithoutIndexAll')   #give path of return file here
-sdfReturns=dfReturns.iloc[1:1861,3:]
+sdf=df.iloc[1317:1801,3:]
+dfReturns=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
+sdfReturns=dfReturns.iloc[1317:1801,3:]
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
 select=[]
 #W=5
-W=27 # no. of rolling
+W=1 # no. of rolling
 #D=50
-D=180 #no. of training days on which rolling performed
+D=365 #no. of training days on which rolling performed
 #for i in range(0,20,4):
-Add=60 # I think for SSD
+Add=120 # I think for SSD
 
-for j in range(0,28):
+for j in range(0,1):
      selectdf = pd.DataFrame()
      selectrow = []
-     for i in range(0,472,4):
+     for i in range(0,1920,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
          df = pd.DataFrame(df, columns=ind)
          dfw = df[j*Add:D +j*Add]
@@ -54,7 +54,7 @@ for j in range(0,28):
 print(select)
 # # df2 = pd.DataFrame(select)
 # # print(df2)
-writein=pd.ExcelWriter("FTSE100_FSVMRolling0to10(F).xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("S&P500_FSVMRolling0(F)New.xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
