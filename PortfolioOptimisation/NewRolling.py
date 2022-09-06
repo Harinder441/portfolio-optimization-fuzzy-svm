@@ -21,17 +21,19 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
 
 #df=read_excel(r"C:\Users\admin\Downloads\NIKKEI400Index.xlsx",sheet_name='FilterAllWithoutIndex')
 df=read_excel(r"C:\Users\admin\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='FilteredAllWithoutIndex')
+#df=read_excel(r"C:\Users\admin\Downloads\S&P 500daily ALL.xlsx",sheet_name='FilteredDataWithoutIndex')
 #sdf=df.iloc[:523,3:]
 #sdf=df.iloc[1317:1801,3:]
 sdf=df.iloc[1:1861,3:]
 #dfReturns=read_excel(r"C:\Users\admin\Downloads\NIKKEI400Index.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
 dfReturns=read_excel(r"C:\Users\admin\Downloads\NIFTY50 2015-Present ALL (1).xlsx",sheet_name='ReturnsWithoutIndex')   #give path of return file here
+#dfReturns=read_excel(r"C:\Users\admin\Downloads\S&P 500daily ALL.xlsx",sheet_name='ReturnsAllWithoutIndex')
+#sdfReturns=dfReturns.iloc[1317:1801,3:]
 sdfReturns=dfReturns.iloc[1:1861,3:]
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
 select=[]
-#W=5
 W=27 # no. of rolling
 D=180
 #D=365 #no. of training days on which rolling performed
@@ -43,6 +45,7 @@ for j in range(7,13):
 #for j in range(0,1):
      selectdf = pd.DataFrame()
      selectrow = []
+     #for i in range(0,4,4):
      for i in range(0,188,4):
      #for i in range(0,1520,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
@@ -61,6 +64,7 @@ print(select)
 # # print(df2)
 #writein=pd.ExcelWriter("NIKKEI400_FSVMRolling0(F).xlsx", engine='xlsxwriter')
 writein=pd.ExcelWriter("NFTY50_FSVMRolling7to12(F).xlsx", engine='xlsxwriter')
+#writein=pd.ExcelWriter("NIKKEI400_FSVMRolling0(F).xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
