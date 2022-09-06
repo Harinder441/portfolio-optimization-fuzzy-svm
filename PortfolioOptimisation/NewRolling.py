@@ -22,9 +22,10 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
 #df=read_excel(r"C:\Users\Ruchika\PycharmProjects\PortfolioOptimisation\PortfolioOptimisation\Nifty 50 (3).xlsx")
 df=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='FilteredDataWithoutIndex')
 #sdf=df.iloc[:523,3:]
-sdf=df.iloc[1317:1801,3:]
+sdf=df.iloc[1334:1819,3:]
 dfReturns=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
-sdfReturns=dfReturns.iloc[1317:1801,3:]
+sdfReturns=dfReturns.iloc[1334:1819,3:]
+print(sdfReturns)
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
@@ -39,7 +40,7 @@ Add=120 # I think for SSD
 for j in range(0,1):
      selectdf = pd.DataFrame()
      selectrow = []
-     for i in range(0,1920,4):
+     for i in range(0,200,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
          df = pd.DataFrame(df, columns=ind)
          dfw = df[j*Add:D +j*Add]
@@ -47,14 +48,14 @@ for j in range(0,1):
          selectrow.append(r)
          print(r)
          if r== 1:
-             selectdf[str(int(i / 4))] = sdfReturns.iloc[j*Add:D + j*Add+60, i + 3:i + 4]
+             selectdf[str(int(i / 4))] = sdfReturns.iloc[j*Add:D + j*Add+120, i + 3:i + 4]
 #      print(selectrow,selectdf)
      select.append(selectrow)
      selecteddataframes.append(selectdf)
 print(select)
 # # df2 = pd.DataFrame(select)
 # # print(df2)
-writein=pd.ExcelWriter("S&P500_FSVMRolling0(F)New.xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("S&P500_FSVMRolling26(F)New.xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
