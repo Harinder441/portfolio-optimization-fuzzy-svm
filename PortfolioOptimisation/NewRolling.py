@@ -25,7 +25,7 @@ df=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='Filte
 sdf=df.iloc[1334:1819,3:]
 dfReturns=read_excel(r"C:\Users\Abha\Downloads\S&P 500daily ALL.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
 sdfReturns=dfReturns.iloc[1334:1819,3:]
-print(sdfReturns)
+#print(sdfReturns)
 selecteddataframes=[]
 ind=["Trade High","Trade Low","Trade Close","Trade Volume"]
 #get data of each asset
