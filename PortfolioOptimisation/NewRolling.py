@@ -40,7 +40,7 @@ Add=120 # I think for SSD
 for j in range(0,1):
      selectdf = pd.DataFrame()
      selectrow = []
-     for i in range(0,200,4):
+     for i in range(200,400,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
          df = pd.DataFrame(df, columns=ind)
          dfw = df[j*Add:D +j*Add]
@@ -55,7 +55,7 @@ for j in range(0,1):
 print(select)
 # # df2 = pd.DataFrame(select)
 # # print(df2)
-writein=pd.ExcelWriter("S&P500_FSVMRolling26(F)New.xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("S&P500_FSVMRolling26(F)New(50 to100assets).xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
 writein.save()
