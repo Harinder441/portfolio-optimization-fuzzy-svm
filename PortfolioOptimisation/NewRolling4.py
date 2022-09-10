@@ -19,13 +19,13 @@ def oneOrMinus(L):  # return -1 or 1 whichever is present max no. of time in Lis
         return 0
 
 #df=read_excel(r"C:\Users\admin\Downloads\NIKKEI400Index.xlsx",sheet_name='FilterAllWithoutIndex')
-df=read_excel(r"C:\Users\Abha\Downloads\LQ 45 Indonesia.xlsx",sheet_name='FilteredAllWithoutIndex')
+df=read_excel(r"C:\Users\Abha\Downloads\SSE50 China.xlsx",sheet_name='FilteredAllWithoutIndex')
 #df=read_excel(r"C:\Users\admin\Downloads\S&P 500daily ALL.xlsx",sheet_name='FilteredDataWithoutIndex')
 #sdf=df.iloc[:523,3:]
 #sdf=df.iloc[1437:1775,3:]
 sdf=df.iloc[1:1861,3:]
 #dfReturns=read_excel(r"C:\Users\admin\Downloads\NIKKEI400Index.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
-dfReturns=read_excel(r"C:\Users\Abha\Downloads\LQ 45 Indonesia.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
+dfReturns=read_excel(r"C:\Users\Abha\Downloads\SSE50 China.xlsx",sheet_name='ReturnsAllWithoutIndex')   #give path of return file here
 #dfReturns=read_excel(r"C:\Users\admin\Downloads\S&P 500daily ALL.xlsx",sheet_name='ReturnsAllWithoutIndex')
 #sdfReturns=dfReturns.iloc[1437:1775,3:]
 #print(sdfReturns)
@@ -47,7 +47,7 @@ for j in range(0,27):
      selectdf = pd.DataFrame()
      selectrow = []
      #for i in range(0,4,4):
-     for i in range(0,112,4):
+     for i in range(0,116,4):
      #for i in range(0,1520,4):
          df = np.array(sdf.iloc[:, i + 1:i + 5])
          df = pd.DataFrame(df, columns=ind)
@@ -64,7 +64,7 @@ print(select)
 # # df2 = pd.DataFrame(select)
 # # print(df2)
 #writein=pd.ExcelWriter("NIKKEI400_FSVMRolling0(F).xlsx", engine='xlsxwriter')
-writein=pd.ExcelWriter("LQ45_FSVMRolling0to27(F).xlsx", engine='xlsxwriter')
+writein=pd.ExcelWriter("SSE50_FSVMRolling0to27(F).xlsx", engine='xlsxwriter')
 #writein=pd.ExcelWriter("NIKKEI400_FSVMRolling0(F).xlsx", engine='xlsxwriter')
 for i in range(len(selecteddataframes)):
     selecteddataframes[i].to_excel(writein, sheet_name='Rolling'+str(i))
